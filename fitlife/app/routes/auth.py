@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, flash, redirect, render_template, url_
 from flask_login import current_user, login_user, logout_user
 
 from app import bcrypt, db
-from app.email_service import send_welcome_email
+from app.email_service import flash_message_for_email_error, send_welcome_email
 from app.forms import LoginForm, RegisterForm
 from app.models import User
 
@@ -57,7 +57,7 @@ def register_page():
             db.session.add(user)
             db.session.commit()
 
-            email_sent = send_welcome_email(user)
+            email_sent, email_err = send_welcome_email(user)
 
             login_user(user)
             if email_sent:
@@ -70,6 +70,9 @@ def register_page():
                     f"Account created successfully! Welcome, {user.full_name.split()[0]}!",
                     "success",
                 )
+                if email_err:
+                    msg, cat = flash_message_for_email_error(email_err)
+                    flash(msg, cat)
             return redirect(url_for("dashboard.dashboard"))
 
     return render_template("register.html", form=form)
