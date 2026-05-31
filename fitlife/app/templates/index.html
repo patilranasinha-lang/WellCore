@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}FitLife — Home{% endblock %}
+{% block body_class %}landing-page{% endblock %}
+
+{% block navbar %}
+{% include 'partials/site_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="hero-section" id="hero">
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-100 py-5">
+            <div class="col-lg-7">
+                <span class="badge hero-badge mb-3">Your Personal Fitness Hub</span>
+                <h1 class="display-3 fw-bold hero-title">Train Smarter.<br>Eat Better.<br><span class="text-accent">Live FitLife.</span></h1>
+                <p class="lead text-secondary-light mb-4">
+                    Personalized workouts, diet plans, exercise library, protein guides, and weight tracking — all in one dashboard.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('auth.register_page') }}" class="btn btn-accent btn-lg px-4">
+                        <i class="bi bi-person-plus me-2"></i>Get Started Free
+                    </a>
+                    <a href="{{ url_for('auth.login_page') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Log In
+                    </a>
+                </div>
+                <div class="hero-stats row g-3 mt-5">
+                    <div class="col-4">
+                        <div class="stat-card">
+                            <h3 class="mb-0 text-accent">6</h3>
+                            <small class="text-muted">Dashboard Tabs</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-card">
+                            <h3 class="mb-0 text-accent">100%</h3>
+                            <small class="text-muted">Personalized</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-card">
+                            <h3 class="mb-0 text-accent">24/7</h3>
+                            <small class="text-muted">Access</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-card glass-card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar-circle me-3"><i class="bi bi-person-fill"></i></div>
+                        <div>
+                            <strong>Your Dashboard</strong>
+                            <div class="small text-muted">BMI · Plans · Tracker</div>
+                        </div>
+                    </div>
+                    <div class="progress-item mb-3">
+                        <div class="d-flex justify-content-between small mb-1"><span>Weekly Goal</span><span class="text-accent">78%</span></div>
+                        <div class="progress progress-accent"><div class="progress-bar" style="width:78%"></div></div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6"><div class="mini-tile"><i class="bi bi-barbell"></i> Workouts</div></div>
+                        <div class="col-6"><div class="mini-tile"><i class="bi bi-egg-fried"></i> Diet</div></div>
+                        <div class="col-6"><div class="mini-tile"><i class="bi bi-graph-up"></i> Tracker</div></div>
+                        <div class="col-6"><div class="mini-tile"><i class="bi bi-droplet"></i> Protein</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="features">
+    <div class="container py-5">
+        <div class="text-center mb-5 section-heading">
+            <span class="section-label">Features</span>
+            <h2 class="fw-bold display-5">Everything You Need</h2>
+            <p class="text-secondary-light mx-auto" style="max-width:520px;">From signup to daily tracking — one clean HTML dashboard powered by Flask.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-barbell"></i></div>
+                    <h4>Workout Plans</h4>
+                    <p class="text-muted mb-0">Fat loss, muscle gain, or maintenance — matched to your goal.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-cup-hot"></i></div>
+                    <h4>Diet Plans</h4>
+                    <p class="text-muted mb-0">Veg, non-veg, and vegan meal plans with calorie targets.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-activity"></i></div>
+                    <h4>Weight Tracker</h4>
+                    <p class="text-muted mb-0">Log weight and view Chart.js progress graphs.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-heart-pulse"></i></div>
+                    <h4>BMI Calculator</h4>
+                    <p class="text-muted mb-0">Auto BMI with category and health tips on your profile.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-journal-medical"></i></div>
+                    <h4>Exercise Library</h4>
+                    <p class="text-muted mb-0">Cardio, strength, core, and flexibility with instructions.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="bi bi-envelope-check"></i></div>
+                    <h4>Welcome Email</h4>
+                    <p class="text-muted mb-0">HTML welcome email sent when you register (Gmail SMTP).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 section-alt" id="about">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <span class="section-label">About</span>
+                <h2 class="fw-bold">Pure HTML + Bootstrap Frontend</h2>
+                <p class="text-secondary-light">
+                    All pages live in <code class="code-inline">app/templates/</code> — landing, login, register, and dashboard.
+                    Flask renders them server-side with your profile data.
+                </p>
+                <a href="{{ url_for('auth.register_page') }}" class="btn btn-accent btn-lg">Create Account</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="pages-list-card">
+                    <h6 class="text-accent mb-3"><i class="bi bi-folder2-open me-2"></i>HTML Pages</h6>
+                    <ul class="pages-list mb-0">
+                        <li><i class="bi bi-filetype-html"></i> <span>index.html</span> — Home / Landing</li>
+                        <li><i class="bi bi-filetype-html"></i> <span>login.html</span> — Log in</li>
+                        <li><i class="bi bi-filetype-html"></i> <span>register.html</span> — Sign up</li>
+                        <li><i class="bi bi-filetype-html"></i> <span>dashboard.html</span> — App (6 tabs)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'partials/site_footer.html' %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

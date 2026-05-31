@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+{% block body_class %}auth-body{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="auth-page min-vh-100 d-flex flex-column">
+    <nav class="navbar navbar-dark glass-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('dashboard.index') }}">
+                <i class="bi bi-heart-pulse-fill text-accent me-2"></i>FitLife
+            </a>
+            <a href="{{ url_for('dashboard.index') }}" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Home
+            </a>
+        </div>
+    </nav>
+
+    <main class="auth-main flex-grow-1 d-flex align-items-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="auth-card">
+                        <div class="auth-card-header text-center mb-4">
+                            <div class="auth-icon-wrap mx-auto mb-3">
+                                <i class="bi bi-person-plus-fill"></i>
+                            </div>
+                            <h1 class="h3 fw-bold mb-1">Create Your Account</h1>
+                            <p class="text-muted mb-0">Tell us about yourself for a personalized fitness plan</p>
+                        </div>
+                        <form method="POST" action="{{ url_for('auth.register_page') }}" novalidate>
+                            {{ form.hidden_tag() }}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    {{ form.full_name(class="form-control", placeholder="Your name") }}
+                                    {% for e in form.full_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    {{ form.email(class="form-control", placeholder="you@example.com", autocomplete="email") }}
+                                    {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Password</label>
+                                    {{ form.password(class="form-control") }}
+                                    {% for e in form.password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Confirm Password</label>
+                                    {{ form.confirm_password(class="form-control") }}
+                                    {% for e in form.confirm_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Age</label>
+                                    {{ form.age(class="form-control") }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Gender</label>
+                                    {{ form.gender(class="form-select") }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Activity Level</label>
+                                    {{ form.activity_level(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Height (cm)</label>
+                                    {{ form.height_cm(class="form-control", placeholder="175") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Weight (kg)</label>
+                                    {{ form.weight_kg(class="form-control", placeholder="70") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Fitness Goal</label>
+                                    {{ form.goal(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Diet Type</label>
+                                    {{ form.diet_type(class="form-select") }}
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                {{ form.submit(class="btn btn-accent btn-lg w-100") }}
+                            </div>
+                        </form>
+                        <p class="text-center text-muted mt-4 mb-0">
+                            Already have an account?
+                            <a href="{{ url_for('auth.login_page') }}" class="link-accent fw-semibold">Log in</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'partials/site_footer.html' %}
+</div>
+{% endblock %}

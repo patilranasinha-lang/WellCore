@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to FitLife</title>
+</head>
+<body style="margin:0;padding:0;background:#0a0e17;font-family:Arial,Helvetica,sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0e17;padding:32px 16px;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#1a2234;border-radius:16px;border:1px solid #2d3a52;overflow:hidden;">
+                    <tr>
+                        <td style="background:linear-gradient(135deg,#0f2922,#111827);padding:28px 32px;text-align:center;">
+                            <h1 style="margin:0;color:#22d3a5;font-size:28px;">FitLife</h1>
+                            <p style="margin:8px 0 0;color:#94a3b8;font-size:14px;">Health &amp; Fitness</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px;color:#f1f5f9;">
+                            <h2 style="margin:0 0 16px;color:#f1f5f9;font-size:22px;">Welcome, {{ user.full_name }}!</h2>
+                            <p style="margin:0 0 16px;color:#94a3b8;line-height:1.6;font-size:15px;">
+                                Your FitLife account is ready. We've built a personalized experience based on your profile:
+                            </p>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
+                                <tr>
+                                    <td style="padding:12px 16px;background:#111827;border-radius:8px;color:#94a3b8;font-size:14px;">
+                                        <strong style="color:#22d3a5;">Goal:</strong> {{ user.goal|title }}<br>
+                                        <strong style="color:#22d3a5;">Diet:</strong> {{ user.diet_type|replace('-', ' ')|title }}<br>
+                                        <strong style="color:#22d3a5;">Activity:</strong> {{ user.activity_level|title }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin:0 0 24px;color:#94a3b8;line-height:1.6;font-size:15px;">
+                                Explore workout plans, meal guides, exercises, protein sources, and track your weight — all from your dashboard.
+                            </p>
+                            <a href="{{ login_url }}" style="display:inline-block;background:#22d3a5;color:#0a0e17;text-decoration:none;font-weight:bold;padding:14px 28px;border-radius:8px;font-size:15px;">
+                                Go to Dashboard
+                            </a>
+                            <p style="margin:24px 0 0;color:#64748b;font-size:13px;line-height:1.5;">
+                                Stay fit,<br><strong style="color:#94a3b8;">Team FitLife</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
