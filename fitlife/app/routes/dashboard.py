@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from app import db
+from app.email_service import is_mail_configured, send_welcome_email
 from app.models import UserProgress
 from app.routes.content import get_user_content
 from app.routes.content_data import get_diet_plan, get_workout_plan
@@ -15,6 +16,22 @@ def index():
     if current_user.is_authenticated:
         return redirect(url_for("dashboard.dashboard"))
     return render_template("index.html")
+
+
+@dashboard_bp.route("/resend-welcome-email", methods=["POST"])
+@login_required
+def resend_welcome_email():
+    if send_welcome_email(current_user):
+        flash(
+            f"Welcome email sent to {current_user.email}. Check inbox and spam folder.",
+            "success",
+        )
+    else:
+        flash(
+            "Could not send email. Add MAIL_PASSWORD (Gmail App Password) in .env and restart the server. See EMAIL_SETUP.md.",
+            "warning",
+        )
+    return redirect(url_for("dashboard.dashboard") + "#my-profile")
 
 
 @dashboard_bp.route("/dashboard")

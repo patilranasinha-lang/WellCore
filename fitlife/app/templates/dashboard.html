@@ -99,6 +99,14 @@
                                 <span class="value">{{ user.created_at.strftime('%B %d, %Y at %I:%M %p') }}</span>
                             </div>
                         </div>
+                        <div class="col-12 mt-2">
+                            <form method="POST" action="{{ url_for('dashboard.resend_welcome_email') }}" class="d-inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline-light btn-sm">
+                                    <i class="bi bi-envelope me-1"></i> Resend welcome email
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

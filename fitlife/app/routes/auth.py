@@ -57,13 +57,19 @@ def register_page():
             db.session.add(user)
             db.session.commit()
 
-            send_welcome_email(user)
+            email_sent = send_welcome_email(user)
 
             login_user(user)
-            flash(
-                f"Account created successfully! Welcome, {user.full_name.split()[0]}!",
-                "success",
-            )
+            if email_sent:
+                flash(
+                    f"Account created! Welcome email sent to {user.email} — check inbox and spam.",
+                    "success",
+                )
+            else:
+                flash(
+                    f"Account created successfully! Welcome, {user.full_name.split()[0]}!",
+                    "success",
+                )
             return redirect(url_for("dashboard.dashboard"))
 
     return render_template("register.html", form=form)
