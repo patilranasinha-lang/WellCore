@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, url_for
 from flask_login import current_user, login_user, logout_user
 
 from app import bcrypt, db
@@ -57,10 +57,13 @@ def register_page():
             db.session.add(user)
             db.session.commit()
 
-            _sent, message, category = send_welcome_email(user)
-            flash(message, category)
+            send_welcome_email(user)
 
             login_user(user)
+            flash(
+                f"Account created successfully! Welcome, {user.full_name.split()[0]}!",
+                "success",
+            )
             return redirect(url_for("dashboard.dashboard"))
 
     return render_template("register.html", form=form)
