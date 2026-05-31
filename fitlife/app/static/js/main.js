@@ -17,19 +17,43 @@
                 nav.classList.remove("scrolled");
             }
         });
+    }
 
-        const hash = window.location.hash.replace("#", "");
-        if (hash === "login") {
-            const loginModal = document.getElementById("loginModal");
-            if (loginModal) {
-                new bootstrap.Modal(loginModal).show();
+    function initSectionNav() {
+        const links = document.querySelectorAll(".dash-section-nav .nav-link");
+        if (!links.length) return;
+
+        links.forEach(function (link) {
+            link.addEventListener("click", function () {
+                const collapse = document.getElementById("dashNav");
+                if (collapse && collapse.classList.contains("show")) {
+                    bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+                }
+            });
+        });
+
+        const sections = [];
+        links.forEach(function (link) {
+            const id = link.getAttribute("href");
+            if (id && id.startsWith("#")) {
+                const el = document.querySelector(id);
+                if (el) sections.push({ link: link, el: el });
             }
-        } else if (hash === "register") {
-            const registerModal = document.getElementById("registerModal");
-            if (registerModal) {
-                new bootstrap.Modal(registerModal).show();
-            }
-        }
+        });
+
+        if (!sections.length) return;
+
+        window.addEventListener("scroll", function () {
+            const scrollY = window.scrollY + 120;
+            let current = sections[0];
+            sections.forEach(function (s) {
+                if (s.el.offsetTop <= scrollY) current = s;
+            });
+            links.forEach(function (l) {
+                l.classList.remove("active");
+            });
+            if (current) current.link.classList.add("active");
+        });
     }
 
     let weightChart = null;
@@ -48,8 +72,8 @@
         valueEl.textContent = bmi.value;
         categoryEl.textContent = bmi.category;
         messageEl.textContent = bmi.message;
-
-        categoryEl.className = "badge bmi-badge bmi-" + bmi.category.toLowerCase().replace(/\s+/g, "-");
+        categoryEl.className =
+            "badge bmi-badge bmi-" + bmi.category.toLowerCase().replace(/\s+/g, "-");
     }
 
     function renderWeightChart(entries) {
@@ -63,9 +87,7 @@
             return e.weight_kg;
         });
 
-        if (weightChart) {
-            weightChart.destroy();
-        }
+        if (weightChart) weightChart.destroy();
 
         weightChart = new Chart(canvas, {
             type: "line",
@@ -73,7 +95,7 @@
                 labels: labels,
                 datasets: [
                     {
-                        label: "Weight (kg)",
+                        label: "Your weight (kg)",
                         data: data,
                         borderColor: "#22d3a5",
                         backgroundColor: "rgba(34, 211, 165, 0.1)",
@@ -84,18 +106,13 @@
                         pointBorderColor: "#0a0e17",
                         pointBorderWidth: 2,
                         pointRadius: 5,
-                        pointHoverRadius: 7,
                     },
                 ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: { color: "#94a3b8" },
-                    },
-                },
+                plugins: { legend: { labels: { color: "#94a3b8" } } },
                 scales: {
                     x: {
                         ticks: { color: "#94a3b8" },
@@ -104,11 +121,7 @@
                     y: {
                         ticks: { color: "#94a3b8" },
                         grid: { color: "rgba(45, 58, 82, 0.5)" },
-                        title: {
-                            display: true,
-                            text: "kg",
-                            color: "#94a3b8",
-                        },
+                        title: { display: true, text: "kg", color: "#94a3b8" },
                     },
                 },
             },
@@ -123,7 +136,7 @@
             credentials: "same-origin",
         })
             .then(function (res) {
-                if (!res.ok) throw new Error("Failed to load weight history");
+                if (!res.ok) throw new Error("Failed");
                 return res.json();
             })
             .then(function (data) {
@@ -133,7 +146,7 @@
                 const feedback = document.getElementById("weightFeedback");
                 if (feedback) {
                     feedback.innerHTML =
-                        '<span class="text-danger">Could not load weight history.</span>';
+                        '<span class="text-danger">Could not load your weight history.</span>';
                 }
             });
     }
@@ -152,7 +165,7 @@
             if (isNaN(weight) || weight < 30 || weight > 300) {
                 if (feedback) {
                     feedback.innerHTML =
-                        '<span class="text-warning">Enter a valid weight between 30 and 300 kg.</span>';
+                        '<span class="text-warning">Enter a valid weight (30–300 kg).</span>';
                 }
                 return;
             }
@@ -180,76 +193,35 @@
                         if (feedback) {
                             feedback.innerHTML =
                                 '<span class="text-danger">' +
-                                (result.data.error || "Failed to save weight.") +
+                                (result.data.error || "Failed to save.") +
                                 "</span>";
                         }
                         return;
                     }
-
                     if (feedback) {
                         feedback.innerHTML =
-                            '<span class="text-success"><i class="bi bi-check-circle"></i> Weight logged successfully!</span>';
+                            '<span class="text-success"><i class="bi bi-check-circle"></i> Saved! Profile and BMI updated.</span>';
                     }
-
-                    const profileWeight = document.getElementById("profileWeight");
-                    if (profileWeight) {
-                        profileWeight.textContent = weight + " kg";
-                    }
-
-                    if (result.data.bmi) {
-                        updateBmiDisplay(result.data.bmi);
-                    }
-
+                    const pw = document.getElementById("profileWeight");
+                    if (pw) pw.textContent = weight + " kg";
+                    if (result.data.bmi) updateBmiDisplay(result.data.bmi);
                     loadWeightHistory();
                 })
                 .catch(function () {
                     btn.disabled = false;
                     if (feedback) {
                         feedback.innerHTML =
-                            '<span class="text-danger">Network error. Please try again.</span>';
+                            '<span class="text-danger">Network error. Try again.</span>';
                     }
                 });
         });
 
         loadWeightHistory();
-
-        const weightTab = document.querySelector('[data-bs-target="#tab-weight"]');
-        if (weightTab) {
-            weightTab.addEventListener("shown.bs.tab", function () {
-                if (weightChart) {
-                    weightChart.resize();
-                }
-            });
-        }
-    }
-
-    function syncDashNavTabs() {
-        const tabContent = document.getElementById("dashboardTabContent");
-        const tabNav = document.getElementById("dashTabNav");
-        if (!tabContent || !tabNav) return;
-
-        tabContent.querySelectorAll(".tab-pane").forEach(function (pane) {
-            pane.addEventListener("shown.bs.tab", function () {
-                /* Bootstrap handles pane visibility */
-            });
-        });
-
-        tabContent.addEventListener("shown.bs.tab", function (event) {
-            const trigger = event.target;
-            if (!trigger || !trigger.getAttribute("data-bs-target")) return;
-            const targetId = trigger.getAttribute("data-bs-target");
-            tabNav.querySelectorAll(".nav-link").forEach(function (link) {
-                link.classList.remove("active");
-                if (link.getAttribute("data-bs-target") === targetId) {
-                    link.classList.add("active");
-                }
-            });
-        });
     }
 
     document.addEventListener("DOMContentLoaded", function () {
         initLandingPage();
+        initSectionNav();
         initWeightTracker();
-        syncDashNavTabs();
     });
 })();

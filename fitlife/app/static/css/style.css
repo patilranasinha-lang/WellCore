@@ -239,9 +239,93 @@ body {
     margin: 0.15rem;
 }
 
-.dashboard-nav .nav-link.active {
+.dash-section-nav .nav-link {
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 8px;
+}
+
+.dash-section-nav .nav-link:hover,
+.dash-section-nav .nav-link.active {
     background: var(--accent-soft);
     color: var(--accent) !important;
+}
+
+.single-user-page .user-section {
+    scroll-margin-top: 88px;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.single-user-page .user-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.user-welcome {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    height: 100%;
+}
+
+.info-block h5 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+}
+
+.step-num {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin: 0 auto 1rem;
+}
+
+.reg-tag {
+    display: block;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.single-user-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.single-user-wrap .form-control {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
 }
 
 .dash-card {

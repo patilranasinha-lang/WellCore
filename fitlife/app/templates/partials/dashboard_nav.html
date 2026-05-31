@@ -1,36 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark dashboard-nav sticky-top">
     <div class="container-fluid px-lg-4">
-        <a class="navbar-brand fw-bold" href="{{ url_for('dashboard.dashboard') }}">
+        <a class="navbar-brand fw-bold" href="#top">
             <i class="bi bi-heart-pulse-fill text-accent me-2"></i>FitLife
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashNav" aria-label="Toggle menu">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashNav" aria-label="Menu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="dashNav">
-            <ul class="navbar-nav dash-tabs me-auto" id="dashTabNav" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tab-profile" type="button" role="tab">Profile</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="workout-tab" data-bs-toggle="tab" data-bs-target="#tab-workout" type="button" role="tab">Workouts</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="diet-tab" data-bs-toggle="tab" data-bs-target="#tab-diet" type="button" role="tab">Diet</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="exercises-tab" data-bs-toggle="tab" data-bs-target="#tab-exercises" type="button" role="tab">Exercises</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="protein-tab" data-bs-toggle="tab" data-bs-target="#tab-protein" type="button" role="tab">Protein</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="weight-tab" data-bs-toggle="tab" data-bs-target="#tab-weight" type="button" role="tab">Weight</button>
-                </li>
+            <ul class="navbar-nav me-auto dash-section-nav">
+                <li class="nav-item"><a class="nav-link" href="#my-profile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="#my-workout">Workout</a></li>
+                <li class="nav-item"><a class="nav-link" href="#my-diet">Diet</a></li>
+                <li class="nav-item"><a class="nav-link" href="#my-exercises">Exercises</a></li>
+                <li class="nav-item"><a class="nav-link" href="#my-protein">Protein</a></li>
+                <li class="nav-item"><a class="nav-link" href="#my-weight">Weight</a></li>
             </ul>
-            <div class="d-flex align-items-center gap-2 gap-md-3 py-2 py-lg-0">
-                <span class="user-chip d-none d-md-inline-flex">
-                    <i class="bi bi-person-circle"></i> {{ user.full_name }}
-                </span>
+            <div class="d-flex align-items-center gap-2 py-2 py-lg-0">
+                <span class="user-chip"><i class="bi bi-person-circle"></i> {{ user.full_name }}</span>
                 <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-sm px-3">Logout</a>
             </div>
         </div>
