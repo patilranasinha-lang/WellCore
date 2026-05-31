@@ -30,6 +30,14 @@ def create_app(config_class=Config):
     if app.config.get("MAIL_USERNAME") and not app.config.get("MAIL_DEFAULT_SENDER"):
         app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
 
+    if app.config.get("MAIL_USERNAME") and app.config.get("MAIL_PASSWORD"):
+        app.logger.info("Mail ready: %s", app.config["MAIL_USERNAME"])
+    else:
+        app.logger.warning(
+            "Mail not configured — welcome emails disabled. %s",
+            "Set MAIL_PASSWORD in .env or instance/mail_secret.txt",
+        )
+
     login_manager.login_view = "auth.login_page"
     login_manager.login_message = "Please log in to access this page."
     login_manager.login_message_category = "warning"

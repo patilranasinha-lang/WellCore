@@ -57,11 +57,8 @@ def register_page():
             db.session.add(user)
             db.session.commit()
 
-            sent, message = send_welcome_email(user)
-            if sent:
-                flash("Account created! Check your inbox for a welcome email.", "success")
-            else:
-                flash(f"Account created! {message}", "warning")
+            _sent, message, category = send_welcome_email(user)
+            flash(message, category)
 
             login_user(user)
             return redirect(url_for("dashboard.dashboard"))
