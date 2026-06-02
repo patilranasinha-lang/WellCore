@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}WellCore — Home{% endblock %}
+{% block body_class %}landing-page wellcore-page{% endblock %}
+
+{% block navbar %}
+{% include 'partials/wellcore_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="hero-section wellcore-hero" id="hero">
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-75 py-5">
+            <div class="col-lg-9 mx-auto text-center">
+                <span class="badge hero-badge mb-3">WellCore Platform</span>
+                <h1 class="display-3 fw-bold hero-title">
+                    Welcome to <span class="text-accent">WellCore</span>
+                </h1>
+                <p class="lead text-secondary-light mb-4 mx-auto" style="max-width:640px;">
+                    Your central hub for apps and data. View all user registrations and logins in one place,
+                    or open the <strong>Health &amp; Fitness</strong> app to sign up and train.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="#database" class="btn btn-accent btn-lg px-4" id="heroDatabaseBtn">
+                        <i class="bi bi-table me-2"></i>View database
+                    </a>
+                    <a href="{{ url_for('dashboard.fitlife_home') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-heart-pulse me-2"></i>Health &amp; Fitness app
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 section-alt" id="apps">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <span class="section-label">Applications</span>
+                <h2 class="fw-bold display-6 mb-4">Apps on WellCore</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card h-100">
+                            <div class="feature-icon"><i class="bi bi-heart-pulse"></i></div>
+                            <h4>FitLife — Health &amp; Fitness</h4>
+                            <p class="text-muted mb-3">Personal workouts, diet plans, BMI, and weight tracking. Users register and log in through this app.</p>
+                            <a href="{{ url_for('dashboard.fitlife_home') }}" class="btn btn-accent btn-sm">Open H&amp;F app</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="database">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="dash-card">
+                    <span class="section-label">User database</span>
+                    <h2 class="fw-bold h3 mb-2">Registration &amp; login records</h2>
+                    <p class="text-muted mb-4">
+                        All accounts from the Health &amp; Fitness app, shown in a simple table. Click the button to load or refresh entries.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <button type="button" class="btn btn-accent" id="viewDatabaseBtn" aria-expanded="true" aria-controls="databasePanel">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Show / refresh records
+                        </button>
+                        <span class="badge bg-secondary" id="databaseCount">—</span>
+                    </div>
+                    <div id="databasePanel" class="database-panel">
+                        <p class="text-muted mb-3 small">
+                            Data from the <code>users</code> table. Passwords are stored encrypted (bcrypt), not as plain text.
+                        </p>
+                        <div id="databaseLoading" class="text-center py-4 text-muted d-none">
+                            <span class="spinner-border spinner-border-sm me-2" role="status"></span>Loading…
+                        </div>
+                        <div id="databaseError" class="alert alert-danger d-none" role="alert"></div>
+                        <div id="databaseEmpty" class="text-center py-4 text-muted d-none">
+                            No registrations yet.
+                            <a href="{{ url_for('auth.register_page') }}" class="link-accent">Create an account in H&amp;F</a>.
+                        </div>
+                        <div class="table-responsive d-none" id="databaseTableWrap">
+                            <table class="table table-dark table-striped table-hover align-middle mb-0" id="registrationsTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ID</th>
+                                        <th>Full name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Height</th>
+                                        <th>Weight</th>
+                                        <th>Goal</th>
+                                        <th>Diet</th>
+                                        <th>Activity</th>
+                                        <th>Registered</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="registrationsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'partials/wellcore_footer.html' %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    window.FITLIFE = window.FITLIFE || {};
+    window.FITLIFE.registrationsUrl = "{{ url_for('dashboard.registrations_table') }}";
+    window.FITLIFE.autoLoadDatabase = true;
+</script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

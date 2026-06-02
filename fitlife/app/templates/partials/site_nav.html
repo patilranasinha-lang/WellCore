@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav" id="mainNav">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ url_for('dashboard.index') }}#hero">
+        <a class="navbar-brand fw-bold" href="{{ url_for('dashboard.fitlife_home') }}#hero" title="FitLife home">
             <i class="bi bi-heart-pulse-fill text-accent me-2"></i>FitLife
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,9 +8,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}#how-it-works">How It Works</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.wellcore_home') }}">WellCore</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.fitlife_home') }}#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.fitlife_home') }}#how-it-works">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.fitlife_home') }}#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.fitlife_home') }}#signup-info">Database</a></li>
                 <li class="nav-item">
                     <a class="btn btn-outline-light btn-sm px-3" href="{{ url_for('auth.login_page') }}">Log In</a>
                 </li>

@@ -317,6 +317,32 @@ body {
     text-align: center;
 }
 
+.wellcore-page .min-vh-75 {
+    min-height: 75vh;
+}
+
+.database-panel {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+}
+
+.wellcore-page .database-panel {
+    border-top: none;
+    padding-top: 0;
+}
+
+.database-panel .table {
+    font-size: 0.85rem;
+}
+
+.database-panel .table th {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+}
+
 .single-user-wrap {
     max-width: 1100px;
     margin: 0 auto;

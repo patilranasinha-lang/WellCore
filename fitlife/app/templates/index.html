@@ -28,6 +28,9 @@
                     <a href="{{ url_for('auth.login_page') }}" class="btn btn-outline-light btn-lg px-4">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Log In
                     </a>
+                    <a href="#signup-info" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-table me-2"></i>View database
+                    </a>
                 </div>
             </div>
         </div>
@@ -188,8 +191,50 @@
                         <div class="col-6 col-md-4"><span class="reg-tag">Diet type</span></div>
                         <div class="col-6 col-md-4"><span class="reg-tag">Activity level</span></div>
                     </div>
-                    <div class="text-center mt-4">
-                        <a href="{{ url_for('auth.register_page') }}" class="btn btn-accent btn-lg">Get Started</a>
+                    <div class="text-center mt-4 d-flex flex-wrap gap-3 justify-content-center">
+                        <a href="{{ url_for('auth.register_page') }}" class="btn btn-accent btn-lg">
+                            <i class="bi bi-person-plus me-2"></i>Create Account
+                        </a>
+                        <button type="button" class="btn btn-outline-light btn-lg" id="viewDatabaseBtn" aria-expanded="false" aria-controls="databasePanel">
+                            <i class="bi bi-table me-2"></i>View database records
+                        </button>
+                    </div>
+                    <div id="databasePanel" class="database-panel mt-4 d-none" hidden>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                            <p class="text-muted mb-0 small">
+                                All registrations in the database. Passwords are stored encrypted, not as plain text.
+                            </p>
+                            <span class="badge bg-secondary" id="databaseCount">0 registrations</span>
+                        </div>
+                        <div id="databaseLoading" class="text-center py-4 text-muted d-none">
+                            <span class="spinner-border spinner-border-sm me-2" role="status"></span>Loading…
+                        </div>
+                        <div id="databaseError" class="alert alert-danger d-none" role="alert"></div>
+                        <div id="databaseEmpty" class="text-center py-4 text-muted d-none">
+                            No registrations yet. <a href="{{ url_for('auth.register_page') }}" class="link-accent">Create the first account</a>.
+                        </div>
+                        <div class="table-responsive d-none" id="databaseTableWrap">
+                            <table class="table table-dark table-striped table-hover align-middle mb-0" id="registrationsTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ID</th>
+                                        <th>Full name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Height</th>
+                                        <th>Weight</th>
+                                        <th>Goal</th>
+                                        <th>Diet</th>
+                                        <th>Activity</th>
+                                        <th>Registered</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="registrationsTableBody"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,5 +246,9 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<script>
+    window.FITLIFE = window.FITLIFE || {};
+    window.FITLIFE.registrationsUrl = "{{ url_for('dashboard.registrations_table') }}";
+</script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}

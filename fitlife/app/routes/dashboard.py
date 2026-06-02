@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.email_service import flash_message_for_email_error, send_welcome_email
-from app.models import UserProgress
+from app.models import User, UserProgress
 from app.routes.content import get_user_content
 from app.routes.content_data import get_diet_plan, get_workout_plan
 from app.utils import calculate_bmi
@@ -11,11 +11,47 @@ from app.utils import calculate_bmi
 dashboard_bp = Blueprint("dashboard", __name__)
 
 
+def _user_registration_row(user: User, index: int) -> dict:
+    return {
+        "no": index,
+        "id": user.id,
+        "full_name": user.full_name,
+        "email": user.email,
+        "password": "Encrypted (bcrypt)",
+        "age": user.age,
+        "gender": user.gender,
+        "height_cm": user.height_cm,
+        "weight_kg": user.weight_kg,
+        "goal": user.goal,
+        "diet_type": user.diet_type,
+        "activity_level": user.activity_level,
+        "registered_at": user.created_at.strftime("%Y-%m-%d %H:%M"),
+    }
+
+
+@dashboard_bp.route("/api/registrations")
+def registrations_table():
+    """JSON list of all registered users for the landing-page database table."""
+    users = User.query.order_by(User.created_at.desc()).all()
+    rows = [_user_registration_row(u, i) for i, u in enumerate(users, start=1)]
+    return jsonify({"count": len(rows), "users": rows})
+
+
 @dashboard_bp.route("/")
-def index():
+@dashboard_bp.route("/health-fitness")
+@dashboard_bp.route("/fitlife")
+def fitlife_home():
+    """FitLife landing page with in-page database viewer."""
     if current_user.is_authenticated:
         return redirect(url_for("dashboard.dashboard"))
     return render_template("index.html")
+
+
+@dashboard_bp.route("/wellcore")
+def wellcore_home():
+    if current_user.is_authenticated:
+        return redirect(url_for("dashboard.dashboard"))
+    return render_template("wellcore.html")
 
 
 @dashboard_bp.route("/resend-welcome-email", methods=["POST"])

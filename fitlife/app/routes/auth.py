@@ -82,4 +82,4 @@ def register_page():
 def logout():
     logout_user()
     flash("You have been logged out.", "info")
-    return redirect(url_for("dashboard.index"))
+    return redirect(url_for("dashboard.fitlife_home"))
